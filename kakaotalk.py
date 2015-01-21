@@ -209,6 +209,9 @@ class MessageExportAnalyser:
            print "%s" % message.prev
            print "(%.1f days later:)\n%s\n" % (message.response_time/(60*60*24), message)
 
+        #most used word
+        print "\nMost used word for each users: "
+
     def total_count(self):
         return sum(s.count['messages'] for s in self.senders.itervalues())
 
