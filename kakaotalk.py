@@ -70,7 +70,11 @@ class Sender:
         self.response_time = self.response_time + Counter(time=seconds, count=1)
 
     def get_response_time(self):
-        return self.response_time['time'] / self.response_time['count']
+        #TODO: fix it
+        try:
+            return self.response_time['time'] / self.response_time['count']
+        except Exception, e:
+            print "wtf"
 
 class MessageExportAnalyser:
     messages = []
@@ -116,9 +120,11 @@ class MessageExportAnalyser:
 
             (t, dt, sender_name, text) = self.parse_line(line)
             #print line + " " + str(dt)
-            if t == LINE_TYPE_UNCHANGED and last_message and len(line) > 26:
+            if sender_name == "" or sender_name == " ":
+                pass
+            elif t == LINE_TYPE_UNCHANGED and last_message:
                 last_message.add_line(text)
-            elif t == LINE_TYPE_MESSAGE and len(line) > 26:
+            elif t == LINE_TYPE_MESSAGE:
                 try: 
                     sender = self.senders[sender_name]
                 except KeyError:
@@ -156,7 +162,7 @@ class MessageExportAnalyser:
 
         # Try to find a datetime at beginning of line
         # Export can be in different formats, so check multiple string lengths
-        for c in range(30,10,-1):
+        for c in range(40,10,-1):
             try:
                 dt = dateutil.parser.parse(line[0:c])
                 line = line[(c-1):]
