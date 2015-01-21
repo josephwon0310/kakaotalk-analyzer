@@ -116,9 +116,9 @@ class MessageExportAnalyser:
 
             (t, dt, sender_name, text) = self.parse_line(line)
             #print line + " " + str(dt)
-            if t == LINE_TYPE_UNCHANGED and last_message and len(line) > 25:
+            if t == LINE_TYPE_UNCHANGED and last_message and len(line) > 26:
                 last_message.add_line(text)
-            elif t == LINE_TYPE_MESSAGE and len(line) > 25:
+            elif t == LINE_TYPE_MESSAGE and len(line) > 26:
                 try: 
                     sender = self.senders[sender_name]
                 except KeyError:
